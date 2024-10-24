@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="h-full bg-gray-300">
+  <div id="app" class="min-h-full flex flex-col items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold mb-4">Ninfa's Notes</h1>
+    <div class="mb-4">
+      <!--input fiel for new notes-->
+      <input type="text" v-model="newNoteText" placeholder="Enter your note" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <!--button to add new notes-->
+      <button @click="addNote" class="ml-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700">Add Note</button>
+    </div>
+    <!--list to display the notes-->
+    <ul class="w-full max-w-md">
+      <li v-for="(note, index) in notes" :key="index" class="bg-white rounded-lg p-4 mb-2 shadow-md flex justify-between items-center">
+        <!--display the note content-->
+        {{ note }}
+        <!--button to delete the note-->
+        <button @click="deleteNote(index)" class="px-2 py-1 rounded-lg bg-red-500 text-white hover:bg-red-700">Delete</button>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          notes: [],
+          newNoteText: ''
+        }
+      },
+      methods: {
+        addNote() {
+          if (this.newNoteText.trim() !== '') {
+            this.notes.push(this.newNoteText);
+            this.newNoteText = '';
+          }
+        },
+        deleteNote(index) {
+          this.notes.splice(index, 1);
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
